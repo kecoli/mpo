@@ -13,6 +13,7 @@ Depends:
     boot,
     xts,
     lattice,
+    mvtnorm,
     rrcov,
     robust,
     PortfolioAnalytics,
