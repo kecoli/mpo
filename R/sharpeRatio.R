@@ -1,7 +1,7 @@
 #' calculate a traditional or modified Sharpe Ratio of Return over StdDev or
 #' VaR or ES, accompanied with bootstrap of standard error. 
 #' 
-#' A modified version of SharpeRatio that compatible with table.Peroformance
+#' A modified version of sharpeRatio that compatible with table.Peroformance
 #' 
 #' The Sharpe ratio is simply the return per unit of risk (represented by
 #' variability).  In the classic case, the unit of risk is the standard
@@ -33,7 +33,7 @@
 #' periodicity of the data being input (e.g., monthly data -> monthly SR)
 #' 
 #' 
-#' @aliases SharpeRatio.modified SharpeRatio
+#' @aliases sharpeRatio.modified sharpeRatio
 #' @param R an xts, vector, matrix, data frame, timeSeries or zoo object of
 #' asset returns
 #' @param Rf risk free rate, in same period as your returns
@@ -44,7 +44,7 @@
 #' @param annualize if TRUE, annualize the measure, default FALSE
 #' @param \dots any other passthru parameters to the VaR or ES functions
 #' @author Brian G. Peterson, Kirk Li 
-#' @seealso \code{\link{SharpeRatio.annualized}} \cr
+#' @seealso \code{\link{sharpeRatio.annualized}} \cr
 #' \code{\link{InformationRatio}} \cr \code{\link{TrackingError}} \cr
 #' \code{\link{ActivePremium}} \cr \code{\link{SortinoRatio}} \cr
 #' \code{\link{VaR}} \cr \code{\link{ES}} \cr
@@ -58,29 +58,29 @@
 #' @examples
 #' 
 #' data(managers)
-#' SharpeRatio(managers[,1,drop=FALSE], Rf=.035/12, FUN="StdDev") 
-#' SharpeRatio(managers[,1,drop=FALSE], Rf = managers[,10,drop=FALSE], FUN="StdDev")
-#' SharpeRatio(managers[,1:6], Rf=.035/12, FUN="StdDev") 
-#' SharpeRatio(managers[,1:6], Rf = managers[,10,drop=FALSE], FUN="StdDev")
+#' sharpeRatio(managers[,1,drop=FALSE], Rf=.035/12, FUN="StdDev") 
+#' sharpeRatio(managers[,1,drop=FALSE], Rf = managers[,10,drop=FALSE], FUN="StdDev")
+#' sharpeRatio(managers[,1:6], Rf=.035/12, FUN="StdDev") 
+#' sharpeRatio(managers[,1:6], Rf = managers[,10,drop=FALSE], FUN="StdDev")
 #' 
 #' 
 #' 
 #' data(edhec)
-#' SharpeRatio(edhec[, 6, drop = FALSE], FUN="VaR")
-#' SharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR")
-#' SharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR" , method="gaussian")
-#' SharpeRatio(edhec[, 6, drop = FALSE], FUN="ES")
+#' sharpeRatio(edhec[, 6, drop = FALSE], FUN="VaR")
+#' sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR")
+#' sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR" , method="gaussian")
+#' sharpeRatio(edhec[, 6, drop = FALSE], FUN="ES")
 #' 
 #' # and all the methods
-#' SharpeRatio(managers[,1:9], Rf = managers[,10,drop=FALSE])
-#' SharpeRatio(edhec,Rf = .04/12)
+#' sharpeRatio(managers[,1:9], Rf = managers[,10,drop=FALSE])
+#' sharpeRatio(edhec,Rf = .04/12)
 #' 
 #' # bootstrap sd
-#' # SharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR", bootsd=TRUE)
+#' # sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR", bootsd=TRUE)
 #' 
 #' @export 
-#' @rdname SharpeRatio
-SharpeRatio <-
+#' @rdname sharpeRatio
+sharpeRatio <-
 function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"), 
 		weights = NULL, annualize = FALSE, bootsd = FALSE, ...) 
 {
@@ -111,14 +111,16 @@ function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"),
 	else {
 		scale = 1
 	}
-	srm <- function(R, ..., Rf, p, FUNC) {
+	
+	srm <<- function(R, ..., Rf, p, FUNC) {
 		FUNCT <- match.fun(FUNC)
 		xR = Return.excess(R, Rf)
 		SRM = mean(xR, na.rm = TRUE)/FUNCT(R = R, p = p, ... = ..., 
 				invert = FALSE)
 		SRM
 	}
-	sra <- function(R, ..., Rf, p, FUNC) {
+	
+	sra <<- function(R, ..., Rf, p, FUNC) {
 		if (FUNC == "StdDev") 
 			FUNC = "StdDev.annualized"
 		FUNCT <- match.fun(FUNC)
@@ -186,83 +188,6 @@ function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"),
 		return(list(estimate = result, boot.sd = result.boot.sd))
 	return(result)
 }
-
-
-sharpeRatio <- function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"), 
-		weights = NULL, annualize = FALSE,geometric = TRUE, ...) 
-{
-	R = checkData(R)
-	FUN <- match.arg(FUN)
-	if (!is.null(dim(Rf))) 
-		Rf = checkData(Rf)
-	if (annualize) {
-		freq = periodicity(R)
-		switch(freq$scale, minute = {
-					stop("Data periodicity too high")
-				}, hourly = {
-					stop("Data periodicity too high")
-				}, daily = {
-					scale = 252
-				}, weekly = {
-					scale = 52
-				}, monthly = {
-					scale = 12
-				}, quarterly = {
-					scale = 4
-				}, yearly = {
-					scale = 1
-				})
-	}
-	else {
-		scale = 1
-	}
-	srm <- function(R, ..., Rf, p, FUNC) {
-		FUNCT <- match.fun(FUNC)
-		xR = Return.excess(R, Rf)
-		SRM = mean(xR, na.rm = TRUE)/FUNCT(R = R, p = p, ... = ..., 
-				invert = FALSE)
-		SRM
-	}
-	sra <- function(R, ..., Rf, p, FUNC) {
-		if (FUNC == "StdDev") 
-			FUNC = "StdDev.annualized"
-		FUNCT <- match.fun(FUNC)
-		xR = Return.excess(R, Rf)
-		SRA = Return.annualized(xR,...=...)/FUNCT(R = R, p = p, ... = ..., 
-				invert = FALSE)
-		SRA
-	}
-	i = 1
-	if (is.null(weights)) {
-		result = matrix(nrow = length(FUN), ncol = ncol(R))
-		colnames(result) = colnames(R)
-	}
-	else {
-		result = matrix(nrow = length(FUN))
-	}
-	tmprownames = vector()
-	for (FUNCT in FUN) {
-		if (is.null(weights)) {
-			if (annualize) 
-				result[i, ] = sapply(R, FUN = sra, Rf = Rf, p = p, 
-						FUNC = FUNCT, ...)
-			else result[i, ] = sapply(R, FUN = srm, Rf = Rf, 
-						p = p, FUNC = FUNCT, ...)
-		}
-		else {
-			result[i, ] = mean(R %*% weights, na.rm = TRUE)/match.fun(FUNCT)(R, 
-					Rf = Rf, p = p, weights = weights, portfolio_method = "single", 
-					... = ...)
-		}
-		tmprownames = c(tmprownames, paste(if (annualize) "Annualized ", 
-						FUNCT, " Sharpe", " (Rf=", round(scale * mean(Rf) * 
-										100, 1), "%, p=", round(p * 100, 1), "%):", sep = ""))
-		i = i + 1
-	}
-	rownames(result) = tmprownames
-	return(result)
-}
-		
 
 
 
