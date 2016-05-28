@@ -29,6 +29,7 @@ An 'xts' object on 1997-01-31/2010-12-31 containing:
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
+data(smallcapM)
 head(smallcapM[,1:5])
 }
 \keyword{datasets}

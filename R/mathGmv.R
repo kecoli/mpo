@@ -6,7 +6,7 @@
 #' @param returns matrix of asset returns
 #' @param digits integer indicating the number of decimal places
 #' @examples
-#' 
+#' data(midcap.ts)
 #' returns = midcap.ts[, 1:10]
 #' mathGmv(returns)
 #' 

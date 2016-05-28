@@ -15,7 +15,7 @@ mathGmv(returns, digits = NULL)
 Compute the weights, mean return and volatility of a GMV portfolio.
 }
 \examples{
-
+data(midcap.ts)
 returns = midcap.ts[, 1:10]
 mathGmv(returns)
 

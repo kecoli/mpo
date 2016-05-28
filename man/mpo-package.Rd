@@ -32,6 +32,7 @@ Introduction to Modern Portfolio Optimization with NuOPT, S-PLUS and S+Bayes
 ~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
 }
 \examples{
+data(midcap.ts)
 returns = midcap.ts[,1:10]
 mathEfrontRisky(returns, 10, display=FALSE, digits = 3)
 }
