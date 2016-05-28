@@ -38,7 +38,8 @@
 #'
 #' # Example 2: start with Var and ES
 #' res.ex2 <- table.Performance(edhec,metrics=c("VaR", "ES"), 
-#' metricsNames=c("Modified VaR","Modified Expected Shortfall"),verbose=T)
+#' metricsNames=c("Modified VaR","Modified Expected 
+#' Shortfall"),verbose=T)
 #' 
 #' # Example 3: Non-interactive
 #' arg.list <- list(
@@ -129,7 +130,10 @@ table.Performance <-
 	if(nrow(metrics.choose)==0) stop("please specify as least one metric")
 	colnames(metrics.choose) <- gsub("arg_","",colnames(metrics.choose))
 	metrics <- as.character(metrics.choose$metrics)
+	
+	if(is.null(metricsNames))
 	metricsNames <-  as.character(metrics.choose$metricsNames)
+
 	metricsOptArgVal <- 
 			lapply(1:nrow(metrics.choose[,-c(1:3),drop=FALSE]),function(x){
 #						x=2
@@ -374,6 +378,8 @@ table.Performance.input.shiny <- function(metrics=NULL,metricsNames=NULL, verbos
 	if(nrow(metrics.choose)==0) stop("please specify as least one metric")
 	colnames(metrics.choose) <- gsub("arg_","",colnames(metrics.choose))
 	metrics <- as.character(metrics.choose$metrics)
+	
+	if(is.null(metricsNames))
 	metricsNames <-  as.character(metrics.choose$metricsNames)
 #	metricsOptArg <- as.list(apply(metrics.choose[,-c(1:3)],1,function(x){
 	##						x <- metrics.choose[1,-c(1:3)]
