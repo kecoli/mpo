@@ -23,7 +23,8 @@ table.Performance.pool <- function(...){
 			"DRatio", 
 			"DrawdownDeviation", 
 			"ES", 
-			"ETL", 
+			"ETL",
+			"etl",
 			"Frequency", 
 			"HurstIndex", 
 #			"KellyRatio", something is wrong with this metric, will fix later
@@ -55,6 +56,7 @@ table.Performance.pool <- function(...){
 			"StdDev", 
 			"StdDev.annualized", 
 			"SterlingRatio", 
+			"starrRatio",
 			"UlcerIndex", 
 			"UpsideFrequency", 
 			"UpsidePotentialRatio", 
