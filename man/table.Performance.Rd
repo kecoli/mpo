@@ -59,7 +59,8 @@ res <- table.Performance(R=edhec,verbose=T, interactive=TRUE)
 
 # Example 2: start with Var and ES
 res.ex2 <- table.Performance(edhec,metrics=c("VaR", "ES"), 
-metricsNames=c("Modified VaR","Modified Expected Shortfall"),verbose=T)
+metricsNames=c("Modified VaR","Modified Expected 
+Shortfall"),verbose=T)
 
 # Example 3: Non-interactive
 arg.list <- list(
