@@ -123,7 +123,7 @@ function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"),
 			FUNC = "StdDev.annualized"
 		FUNCT <- match.fun(FUNC)
 		xR = Return.excess(R, Rf)
-		SRA = Return.annualized(xR)/FUNCT(R = R, p = p, ... = ..., 
+		SRA = Return.annualized(xR,...=...)/FUNCT(R = R, p = p, ... = ..., 
 				invert = FALSE)
 		SRA
 	}
@@ -186,3 +186,122 @@ function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"),
 		return(list(estimate = result, boot.sd = result.boot.sd))
 	return(result)
 }
+
+
+sharpeRatio <- function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"), 
+		weights = NULL, annualize = FALSE,geometric = TRUE, ...) 
+{
+	R = checkData(R)
+	FUN <- match.arg(FUN)
+	if (!is.null(dim(Rf))) 
+		Rf = checkData(Rf)
+	if (annualize) {
+		freq = periodicity(R)
+		switch(freq$scale, minute = {
+					stop("Data periodicity too high")
+				}, hourly = {
+					stop("Data periodicity too high")
+				}, daily = {
+					scale = 252
+				}, weekly = {
+					scale = 52
+				}, monthly = {
+					scale = 12
+				}, quarterly = {
+					scale = 4
+				}, yearly = {
+					scale = 1
+				})
+	}
+	else {
+		scale = 1
+	}
+	srm <- function(R, ..., Rf, p, FUNC) {
+		FUNCT <- match.fun(FUNC)
+		xR = Return.excess(R, Rf)
+		SRM = mean(xR, na.rm = TRUE)/FUNCT(R = R, p = p, ... = ..., 
+				invert = FALSE)
+		SRM
+	}
+	sra <- function(R, ..., Rf, p, FUNC) {
+		if (FUNC == "StdDev") 
+			FUNC = "StdDev.annualized"
+		FUNCT <- match.fun(FUNC)
+		xR = Return.excess(R, Rf)
+		SRA = Return.annualized(xR,...=...)/FUNCT(R = R, p = p, ... = ..., 
+				invert = FALSE)
+		SRA
+	}
+	i = 1
+	if (is.null(weights)) {
+		result = matrix(nrow = length(FUN), ncol = ncol(R))
+		colnames(result) = colnames(R)
+	}
+	else {
+		result = matrix(nrow = length(FUN))
+	}
+	tmprownames = vector()
+	for (FUNCT in FUN) {
+		if (is.null(weights)) {
+			if (annualize) 
+				result[i, ] = sapply(R, FUN = sra, Rf = Rf, p = p, 
+						FUNC = FUNCT, ...)
+			else result[i, ] = sapply(R, FUN = srm, Rf = Rf, 
+						p = p, FUNC = FUNCT, ...)
+		}
+		else {
+			result[i, ] = mean(R %*% weights, na.rm = TRUE)/match.fun(FUNCT)(R, 
+					Rf = Rf, p = p, weights = weights, portfolio_method = "single", 
+					... = ...)
+		}
+		tmprownames = c(tmprownames, paste(if (annualize) "Annualized ", 
+						FUNCT, " Sharpe", " (Rf=", round(scale * mean(Rf) * 
+										100, 1), "%, p=", round(p * 100, 1), "%):", sep = ""))
+		i = i + 1
+	}
+	rownames(result) = tmprownames
+	return(result)
+}
+		
+
+
+
+StdDev.annualized <- function (R, scale = NA, ...) 
+{
+	if (is.na(scale) && !xtsible(R)) 
+		stop("'R' needs to be timeBased or xtsible, or scale must be specified.")
+	if (is.na(scale)) {
+		freq = periodicity(R)
+		switch(freq$scale, minute = {
+					stop("Data periodicity too high")
+				}, hourly = {
+					stop("Data periodicity too high")
+				}, daily = {
+					scale = 252
+				}, weekly = {
+					scale = 52
+				}, monthly = {
+					scale = 12
+				}, quarterly = {
+					scale = 4
+				}, yearly = {
+					scale = 1
+				})
+	}
+	if (is.vector(R)) {
+		sqrt(scale) * sd(R, na.rm = TRUE)
+	}
+	else {
+		if (!xtsible(R) & is.na(scale)) 
+			stop("'R' needs to be timeBased or xtsible, or scale must be specified.")
+		R = checkData(R)
+		result = apply(R, 2, sd.multiperiod, scale = scale)
+		dim(result) = c(1, NCOL(R))
+		colnames(result) = colnames(R)
+		rownames(result) = "Annualized Standard Deviation"
+		return(result)
+	}
+}
+
+
+
