@@ -38,7 +38,7 @@
 #' # Example 2: start with Var and ES
 #' res.ex2 <- table.Performance(edhec,metrics=c("VaR", "ES"), 
 #' metricsNames=c("Modified VaR","Modified Expected 
-#' Shortfall"),verbose=T)
+#' Shortfall"),interactive=FALSE, verbose=T)
 #' 
 #' # Example 3: Non-interactive
 #' arg.list <- list(
@@ -126,13 +126,14 @@ table.Performance <-
 	} 
 #   process the selected metrics and args	
 	metrics.choose <- subset(metrics.vec,include==1)
-	if(nrow(metrics.choose)==0) stop("please specify as least one metric")
+	if(nrow(metrics.choose)==0) {print("please specify as least one metric") 
+		return()}
 	colnames(metrics.choose) <- gsub("arg_","",colnames(metrics.choose))
 	metrics <- as.character(metrics.choose$metrics)
 	
 	if(is.null(metricsNames))
-	metricsNames <-  as.character(metrics.choose$metricsNames)
-
+		metricsNames <-  as.character(metrics.choose$metricsNames)
+	
 	metricsOptArgVal <- 
 			lapply(1:nrow(metrics.choose[,-c(1:3),drop=FALSE]),function(x){
 #						x=2
@@ -304,16 +305,16 @@ table.Performance <-
 		
 	}
 	
-  if(exportXLS){
-      cat("###################################","\n")
-      cat(paste0("Exporting to Excel file ",ExcelFileName,"\n"))
-      cat("###################################","\n")
-    require(WriteXLS)
-    temp <- res$resultingtable
-    inslib(WriteXLS)
-    WriteXLS("temp",row.names = TRUE,ExcelFileName=ExcelFileName )
-    
-  }
+	if(exportXLS){
+		cat("###################################","\n")
+		cat(paste0("Exporting to Excel file ",ExcelFileName,"\n"))
+		cat("###################################","\n")
+		require(WriteXLS)
+		temp <- res$resultingtable
+		inslib(WriteXLS)
+		WriteXLS("temp",row.names = TRUE,ExcelFileName=ExcelFileName )
+		
+	}
 	return(res)
 }
 
@@ -372,12 +373,13 @@ table.Performance.input.shiny <- function(metrics=NULL,metricsNames=NULL, verbos
 	
 #   process the selected metrics and args	
 	metrics.choose <- subset(metrics.vec,include==1)
-	if(nrow(metrics.choose)==0) stop("please specify as least one metric")
+	if(nrow(metrics.choose)==0) {print("please specify as least one metric next time")
+		return()}
 	colnames(metrics.choose) <- gsub("arg_","",colnames(metrics.choose))
 	metrics <- as.character(metrics.choose$metrics)
 	
 	if(is.null(metricsNames))
-	metricsNames <-  as.character(metrics.choose$metricsNames)
+		metricsNames <-  as.character(metrics.choose$metricsNames)
 #	metricsOptArg <- as.list(apply(metrics.choose[,-c(1:3)],1,function(x){
 	##						x <- metrics.choose[1,-c(1:3)]
 #						x[is.na(x)] <- "NA"
