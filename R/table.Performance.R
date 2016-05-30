@@ -130,9 +130,7 @@ table.Performance <-
 
 # solution for same metric multiple times 
 	if(nrow(metrics.choose)!=length(metrics)){
-		
 		metrics.choose <- do.call("rbind", replicate(table(metrics), metrics.choose, simplify = FALSE))
-		
 	}
 	
 	if(nrow(metrics.choose)==0) {print("please specify as least one metric") 
@@ -229,8 +227,8 @@ table.Performance <-
 				Arg.mat[[k]] <- ArgString.i
 				
 				if(length(ArgString.i)>0 & nchar(ArgString.i)>0)
-					newvalue = eval(parse(text=paste0("apply(x, MARGIN = 2, FUN = metric,",ArgString.i,")"))) else
-					newvalue = apply(x, MARGIN = 2, FUN = metric) #...
+					newvalue = eval(parse(text=paste0("apply(x, MARGIN = 2, FUN = metrics[k],",ArgString.i,")"))) else
+					newvalue = apply(x, MARGIN = 2, FUN = metrics[k]) #...
 				values = c(values, newvalue)
 			}
 			if (column == 1) {
