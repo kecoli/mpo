@@ -82,7 +82,7 @@
 #' @rdname sharpeRatio
 sharpeRatio <-
 function (R, Rf = 0, p = 0.95, method = c("StdDev", "VaR", "ES"), 
-		weights = NULL, annualize = FALSE, bootsd = FALSE, ...) 
+		weights = NULL, annualize = FALSE, bootsd = FALSE, geometric = FALSE,...) 
 {
 	R = checkData(R)
 	
@@ -107,8 +107,7 @@ function (R, Rf = 0, p = 0.95, method = c("StdDev", "VaR", "ES"),
 				}, yearly = {
 					scale = 1
 				})
-	}
-	else {
+	} 	else {
 		scale = 1
 	}
 	
@@ -125,7 +124,7 @@ function (R, Rf = 0, p = 0.95, method = c("StdDev", "VaR", "ES"),
 			FUNC = "StdDev.annualized"
 		FUNCT <- match.fun(FUNC)
 		xR = Return.excess(R, Rf)
-		SRA = Return.annualized(xR,...=...)/FUNCT(R = R, p = p, ... = ..., 
+		SRA = Return.annualized(xR,geometric=geometric,scale=scale,...=...)/FUNCT(R = R, p = p, scale=scale,... = ..., 
 				invert = FALSE)
 		SRA
 	}
@@ -160,8 +159,7 @@ function (R, Rf = 0, p = 0.95, method = c("StdDev", "VaR", "ES"),
 	for (FUNCT in method) {
 		if (is.null(weights)) {
 			if (annualize) {
-				result[i, ] = sapply(R, FUN = sra, Rf = Rf, p = p, 
-						FUNC = FUNCT, ...)
+				result[i, ] = sapply(R, FUN = sra, Rf = Rf, p = p, FUNC = FUNCT, ...)
 			if(bootsd)
 				result.boot.sd[i,] = sapply(R,FUN=boot.sd, Rf=Rf, p=p, FUNC=FUNCT,FUN_ma="sra",...)
 		}
@@ -227,6 +225,7 @@ StdDev.annualized <- function (R, scale = NA, ...)
 		return(result)
 	}
 }
+
 
 
 
