@@ -30,7 +30,6 @@
 #' @keywords table metrics performance measure
 #' @examples
 #'  \dontrun{
-#' library(PerformanceAnalytics,lib="C:/R/R-3.1.0/library_forge")
 #' data(edhec)
 #' 
 #' # Example 1: start with NULL specification
@@ -209,11 +208,9 @@ table.Performance <-
 		rownames = rownames(y)
 		Arg.mat <- list()
 		for (column in 1:columns) {
-#			 column=1
 			x = as.matrix(y[, column])
 			values = vector("numeric", 0)
 			for (metric in metrics) {
-#			 metric=metrics[3]
 				ArgString.i <- paste(names(metricsOptArgVal[[metric]]),metricsOptArgVal[[metric]],sep=" = ")
 				
 				ArgString.i <- paste(ArgString.i,collapse =", ")

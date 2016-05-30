@@ -38,7 +38,7 @@
 #' asset returns
 #' @param Rf risk free rate, in same period as your returns
 #' @param p confidence level for calculation, default p=.95
-#' @param FUN one of "StdDev" or "VaR" or "ES" to use as the denominator
+#' @param methods one of "StdDev" or "VaR" or "ES" to use as the denominator
 #' @param weights portfolio weighting vector, default NULL, see Details in
 #' \code{\link{VaR}}
 #' @param annualize if TRUE, annualize the measure, default FALSE
@@ -58,35 +58,35 @@
 #' @examples
 #' 
 #' data(managers)
-#' sharpeRatio(managers[,1,drop=FALSE], Rf=.035/12, FUN="StdDev") 
-#' sharpeRatio(managers[,1,drop=FALSE], Rf = managers[,10,drop=FALSE], FUN="StdDev")
-#' sharpeRatio(managers[,1:6], Rf=.035/12, FUN="StdDev") 
-#' sharpeRatio(managers[,1:6], Rf = managers[,10,drop=FALSE], FUN="StdDev")
+#' sharpeRatio(managers[,1,drop=FALSE], Rf=.035/12, method="StdDev") 
+#' sharpeRatio(managers[,1,drop=FALSE], Rf = managers[,10,drop=FALSE], method="StdDev")
+#' sharpeRatio(managers[,1:6], Rf=.035/12, method="StdDev") 
+#' sharpeRatio(managers[,1:6], Rf = managers[,10,drop=FALSE], method="StdDev")
 #' 
 #' 
 #' 
 #' data(edhec)
-#' sharpeRatio(edhec[, 6, drop = FALSE], FUN="VaR")
+#' sharpeRatio(edhec[, 6, drop = FALSE], method="VaR")
 #' sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR")
 #' sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR" , method="gaussian")
-#' sharpeRatio(edhec[, 6, drop = FALSE], FUN="ES")
+#' sharpeRatio(edhec[, 6, drop = FALSE], method="ES")
 #' 
 #' # and all the methods
 #' sharpeRatio(managers[,1:9], Rf = managers[,10,drop=FALSE])
 #' sharpeRatio(edhec,Rf = .04/12)
 #' 
 #' # bootstrap sd
-#' # sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR", bootsd=TRUE)
+#' # sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, method="VaR", bootsd=TRUE)
 #' 
 #' @export 
 #' @rdname sharpeRatio
 sharpeRatio <-
-function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"), 
+function (R, Rf = 0, p = 0.95, method = c("StdDev", "VaR", "ES"), 
 		weights = NULL, annualize = FALSE, bootsd = FALSE, ...) 
 {
 	R = checkData(R)
 	
-	FUN <- match.arg(FUN)
+	method <- match.arg(method)
 	
 	if (!is.null(dim(Rf))) 
 		Rf = checkData(Rf)
@@ -144,20 +144,20 @@ function (R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"),
 	
 	i = 1
 	if (is.null(weights)) {
-		result = matrix(nrow = length(FUN), ncol = ncol(R))
+		result = matrix(nrow = length(method), ncol = ncol(R))
 		colnames(result) = colnames(R)
 		if(bootsd){
-			result.boot.sd = matrix(nrow=length(FUN), ncol=ncol(R))
+			result.boot.sd = matrix(nrow=length(method), ncol=ncol(R))
 			}
 	}
 	else {
-		result = matrix(nrow = length(FUN))
+		result = matrix(nrow = length(method))
 	}
 	tmprownames = vector()
 	
 	if(bootsd) require(boot)
 	
-	for (FUNCT in FUN) {
+	for (FUNCT in method) {
 		if (is.null(weights)) {
 			if (annualize) {
 				result[i, ] = sapply(R, FUN = sra, Rf = Rf, p = p, 

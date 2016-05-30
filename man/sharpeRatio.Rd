@@ -6,7 +6,7 @@
 \title{calculate a traditional or modified Sharpe Ratio of Return over StdDev or
 VaR or ES, accompanied with bootstrap of standard error.}
 \usage{
-sharpeRatio(R, Rf = 0, p = 0.95, FUN = c("StdDev", "VaR", "ES"),
+sharpeRatio(R, Rf = 0, p = 0.95, method = c("StdDev", "VaR", "ES"),
   weights = NULL, annualize = FALSE, bootsd = FALSE, ...)
 }
 \arguments{
@@ -17,12 +17,12 @@ asset returns}
 
 \item{p}{confidence level for calculation, default p=.95}
 
-\item{FUN}{one of "StdDev" or "VaR" or "ES" to use as the denominator}
-
 \item{weights}{portfolio weighting vector, default NULL, see Details in
 \code{\link{VaR}}}
 
 \item{annualize}{if TRUE, annualize the measure, default FALSE}
+
+\item{methods}{one of "StdDev" or "VaR" or "ES" to use as the denominator}
 
 \item{\dots}{any other passthru parameters to the VaR or ES functions}
 }
@@ -62,25 +62,25 @@ periodicity of the data being input (e.g., monthly data -> monthly SR)
 \examples{
 
 data(managers)
-sharpeRatio(managers[,1,drop=FALSE], Rf=.035/12, FUN="StdDev") 
-sharpeRatio(managers[,1,drop=FALSE], Rf = managers[,10,drop=FALSE], FUN="StdDev")
-sharpeRatio(managers[,1:6], Rf=.035/12, FUN="StdDev") 
-sharpeRatio(managers[,1:6], Rf = managers[,10,drop=FALSE], FUN="StdDev")
+sharpeRatio(managers[,1,drop=FALSE], Rf=.035/12, method="StdDev") 
+sharpeRatio(managers[,1,drop=FALSE], Rf = managers[,10,drop=FALSE], method="StdDev")
+sharpeRatio(managers[,1:6], Rf=.035/12, method="StdDev") 
+sharpeRatio(managers[,1:6], Rf = managers[,10,drop=FALSE], method="StdDev")
 
 
 
 data(edhec)
-sharpeRatio(edhec[, 6, drop = FALSE], FUN="VaR")
+sharpeRatio(edhec[, 6, drop = FALSE], method="VaR")
 sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR")
 sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR" , method="gaussian")
-sharpeRatio(edhec[, 6, drop = FALSE], FUN="ES")
+sharpeRatio(edhec[, 6, drop = FALSE], method="ES")
 
 # and all the methods
 sharpeRatio(managers[,1:9], Rf = managers[,10,drop=FALSE])
 sharpeRatio(edhec,Rf = .04/12)
 
 # bootstrap sd
-# sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, FUN="VaR", bootsd=TRUE)
+# sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, method="VaR", bootsd=TRUE)
 
 }
 \author{
