@@ -114,6 +114,7 @@ table.Performance <-
 		metrics.vec$include[match(metrics,metrics.vec$metrics)] <- 1
 		if(is.null(metrics.vec$metricsNames))
 			metrics.vec$metricsNames[match(metrics,metrics.vec$metrics)] <- metricsNames
+		
 		metrics.vec <- metrics.vec[order(metrics.vec$include,decreasing=T),]
 	}
 #	open data editor	
@@ -126,9 +127,18 @@ table.Performance <-
 	} 
 #   process the selected metrics and args	
 	metrics.choose <- subset(metrics.vec,include==1)
+
+# solution for same metric multiple times 
+	if(nrow(metrics.choose)!=length(metrics)){
+		
+		metrics.choose <- do.call("rbind", replicate(table(metrics), metrics.choose, simplify = FALSE))
+		
+	}
+	
 	if(nrow(metrics.choose)==0) {print("please specify as least one metric") 
 		return()}
 	colnames(metrics.choose) <- gsub("arg_","",colnames(metrics.choose))
+	
 	metrics <- as.character(metrics.choose$metrics)
 	
 	if(is.null(metricsNames))
@@ -211,12 +221,12 @@ table.Performance <-
 		for (column in 1:columns) {
 			x = as.matrix(y[, column])
 			values = vector("numeric", 0)
-			for (metric in metrics) {
-				ArgString.i <- paste(names(metricsOptArgVal[[metric]]),metricsOptArgVal[[metric]],sep=" = ")
+			for (k in 1:length(metrics)) {
+				ArgString.i <- paste(names(metricsOptArgVal[[k]]),metricsOptArgVal[[k]],sep=" = ")
 				
 				ArgString.i <- paste(ArgString.i,collapse =", ")
 				
-				Arg.mat[[metric]] <- ArgString.i
+				Arg.mat[[k]] <- ArgString.i
 				
 				if(length(ArgString.i)>0 & nchar(ArgString.i)>0)
 					newvalue = eval(parse(text=paste0("apply(x, MARGIN = 2, FUN = metric,",ArgString.i,")"))) else

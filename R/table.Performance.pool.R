@@ -49,7 +49,7 @@ table.Performance.pool <- function(...){
 			"SemiVariance", 
 #			"SharpeRatio",
 			"sharpeRatio",
-#			"SharpeRatio.annualized", 
+			"SharpeRatio.annualized", 
 			"skewness", 
 			"SkewnessKurtosisRatio", 
 			"SmoothingIndex", 
