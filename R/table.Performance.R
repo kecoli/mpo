@@ -130,8 +130,11 @@ table.Performance <-
 
 # solution for same metric multiple times 
 	if(nrow(metrics.choose)!=length(metrics)){
-		metrics.choose <- do.call("rbind", replicate(table(metrics), metrics.choose, simplify = FALSE))
+		metrics.choose <- do.call("rbind",lapply(1:nrow(metrics.choose),function(ii){do.call("rbind", replicate(table(metrics)[ii], metrics.choose[ii,], simplify = FALSE))}))
 	}
+	
+	metrics.choose <- metrics.choose[match(metrics,metrics.choose$metrics),]
+	
 	
 	if(nrow(metrics.choose)==0) {print("please specify as least one metric") 
 		return()}
