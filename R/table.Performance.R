@@ -384,6 +384,16 @@ table.Performance.input.shiny <- function(metrics=NULL,metricsNames=NULL, verbos
 	
 #   process the selected metrics and args	
 	metrics.choose <- subset(metrics.vec,include==1)
+	
+	
+# solution for same metric multiple times 
+	if(nrow(metrics.choose)!=length(metrics)){
+		metrics.choose <- do.call("rbind",lapply(1:nrow(metrics.choose),function(ii){do.call("rbind", replicate(table(metrics)[ii], metrics.choose[ii,], simplify = FALSE))}))
+	}
+	
+	metrics.choose <- metrics.choose[match(metrics,metrics.choose$metrics),]
+	
+	
 	if(nrow(metrics.choose)==0) {print("please specify as least one metric next time")
 		return()}
 	colnames(metrics.choose) <- gsub("arg_","",colnames(metrics.choose))

@@ -47,6 +47,7 @@ table.Performance.pool <- function(...){
 			"sd.multiperiod", 
 			"SemiDeviation", 
 			"SemiVariance", 
+			"SFM.beta",
 #			"SharpeRatio",
 			"sharpeRatio",
 			"SharpeRatio.annualized", 
@@ -65,3 +66,27 @@ table.Performance.pool <- function(...){
 			"VaR", 
 			"VolatilitySkewness")
 }
+
+SFM.beta <- function (R, Rb.index=1, Rf = 0){
+	Ra = checkData(R)
+	Rb = Ra[,Rb.index]
+	if (!is.null(dim(Rf))) 
+		Rf = checkData(Rf)
+	Ra.ncols = NCOL(Ra)
+	Rb.ncols = NCOL(Rb)
+	xRa = Return.excess(Ra, Rf)
+	xRb = Return.excess(Rb, Rf)
+	pairs = expand.grid(1:Ra.ncols, 1:Rb.ncols)
+	result = apply(pairs, 1, FUN = function(n, xRa, xRb) .beta(xRa[, 
+								n[1]], xRb[, n[2]]), xRa = xRa, xRb = xRb)
+	if (length(result) == 1) 
+		return(result)
+	else {
+		dim(result) = c(Ra.ncols, Rb.ncols)
+		colnames(result) = paste("Beta:", colnames(Rb))
+		rownames(result) = colnames(Ra)
+		return(t(result))
+	}
+}
+
+
