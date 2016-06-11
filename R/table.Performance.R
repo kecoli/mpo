@@ -322,7 +322,6 @@ table.Performance <-
 		cat("###################################","\n")
 		require(WriteXLS)
 		temp <- res$resultingtable
-		inslib(WriteXLS)
 		WriteXLS("temp",row.names = TRUE,ExcelFileName=ExcelFileName )
 		
 	}
