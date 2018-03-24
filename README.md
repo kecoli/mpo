@@ -12,6 +12,7 @@ library(devtools)
 install_github('kecoli/mpo')
 
 runExample("portOpt")
-runExample("")
+
+runExample("perfMetric")
  
  
