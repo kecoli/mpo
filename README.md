@@ -10,3 +10,8 @@ install.packages("devtools")
 library(devtools)
 
 install_github('kecoli/mpo')
+
+runExample("portOpt")
+runExample("")
+ 
+ 
