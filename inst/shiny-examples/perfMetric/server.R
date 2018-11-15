@@ -18,7 +18,7 @@ shinyServer(function(input, output) {
             }
 						
 						
-						inputData <- reactiveFileReader(1000,session, dataname="crsp.short.6.csv", read.csv,fill=T,header=T, na.strings=c("NA","."))
+						inputData <- reactiveFileReader(1000,session=NULL, filePath="crsp.short.6.csv", read.csv,fill=T,header=T, na.strings=c("NA","."))
 						
             
             output$text <- renderPrint({
@@ -31,7 +31,7 @@ shinyServer(function(input, output) {
             
             output$summary <-  renderDataTable({
                         if(!input$dataset){
-														mydata <- inputData()
+														mydata <-mydata.raw<- inputData()
                             rownames(mydata) <- mydata[,1]
                             colnames(mydata.raw)[1] <- "date"
                             mydata <- mydata[,-1]
@@ -98,6 +98,7 @@ shinyServer(function(input, output) {
             
             output$result <-renderDataTable({
                         if(!input$dataset){
+                            mydata <-mydata.raw<- inputData()
                             rownames(mydata) <- mydata[,1]
                             colnames(mydata.raw)[1] <- "date"
                             mydata <- mydata[,-1]
