@@ -10,7 +10,9 @@ Since the update of devtool 2.0.0, there is a bug in devtool that making DESCRIP
 work around:
 
 library(devtools)
+
 install_version("devtools", version = "1.13.6", repos = "http://cran.us.r-project.org")
+
 install_github('kecoli/mpo')
 
 runExample("portOpt")
