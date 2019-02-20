@@ -49,8 +49,13 @@
 #' 
 
 
-barplot.wts = function(x,legend.text = NULL,col = NULL,ylab = NULL ,xlab = NULL,bar.ylim = NULL)
+barplot.wts = function(x,legend.text = NULL,col = NULL,ylab = NULL ,xlab = NULL,xlab.row.index=NULL, bar.ylim = NULL)
 {
+	if(exists(xlab.row.index)){
+		xlab <- x[xlab.row.index,]
+		xlab <- round(xlab,4)
+		xlab <- sprintf("%.4f", xlab)
+	}
 	n = ncol(x); p = nrow(x)
 	xpos = (abs(x)+x)/2
 	xneg = (x-abs(x))/2
@@ -58,10 +63,11 @@ barplot.wts = function(x,legend.text = NULL,col = NULL,ylab = NULL ,xlab = NULL,
 	{ymax <- max(colSums(xpos,na.rm=T))
 		ymin <- min(colSums(xneg,na.rm=T))
 		ylim = c(ymin,ymax)}   else {ylim = bar.ylim}
+	colnames(xpos) <- xlab
 	barplot(xpos,legend.text = legend.text,col = col,ylab = ylab,xlab = xlab,
-			ylim = bar.ylim, las=2)
-	axis(1,labels=colnames(xpos),las=2)
-	barplot(xneg,add = T,col = col,axisnames=FALSE)
+			ylim = bar.ylim, las=2, cex.names=0.8, bty="n")
+#	axis(1,labels=colnames(xpos),at=1:ncol(xpos), las=2)
+	barplot(xneg,add = T,col = col,axisnames=FALSE,axes=FALSE)
 	abline(h=0)
 }
 
@@ -80,13 +86,15 @@ barplot.wts.efront = function(wts.efront,legend.text = NULL,col = NULL,ylab = NU
 	if(is.null(bar.ylim))
 	{ymax <- max(colSums(xpos,na.rm=T))
 		ymin <- min(colSums(xneg,na.rm=T))
-		ylim = c(ymin,ymax)}   else {ylim = bar.ylim}
+		ylim = c(ymin*1.2,ymax*1.2)}   else {ylim = bar.ylim}
 	colnames(xpos) <- xlab
 	barplot(xpos,legend.text = legend.text,col = col,ylab = ylab,xlab = xlab.choose,
-			ylim = bar.ylim, las=2, cex.names=0.8, bty="n")
+			ylim = ylim, las=2, cex.names=0.8, bty="n",args.legend=list(x = "topleft",bty="n"))
 	barplot(xneg,add = T,col = col,axisnames=FALSE,axes=FALSE)
 	abline(h=0)
 }
+
+legend
 
 
 
