@@ -118,7 +118,7 @@ mathWtsEfrontRiskyMuCov <- function (muRet,volRet,corrRet,mu.efront,efront.only 
 	if (display.wts) {
 #		wtsMat = as.matrix(wts.efront)
 #		dimnames(wtsMat)[[2]] = paste("P",sep = "",1:npoints)
-		barplot.wts.efront(as.matrix(out), legend.text = T, col = topo.colors(10), 
+		barplot.wts(as.matrix(out), legend.text = T, col = topo.colors(10), 
 				ylab = "WEIGHTS", xlab = "VOL")
 	}
 	if(is.null(digits)) {out} else

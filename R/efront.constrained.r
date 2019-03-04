@@ -129,7 +129,7 @@ efrontPlot = function(returns,cset = NULL,mu.min = NULL, mu.max = NULL, rf = NUL
 #     SD <- efront[,"SD"]
     if(wts.plot)
     {
-      barplot.wts.efront(wts.efront,legend.text = T,col = topo.colors(p),ylab = "WEIGHTS",xlab = wts.xlab, bar.ylim = bar.ylim)
+      barplot.wts(wts.efront,legend.text = T,col = topo.colors(p),ylab = "WEIGHTS",xlab = wts.xlab, bar.ylim = bar.ylim)
       }
     par(mfrow = c(1,1))
 }
