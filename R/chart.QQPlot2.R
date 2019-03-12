@@ -61,33 +61,42 @@
 #' @references \code{\link{nor1mix}}
 #' @keywords normal mixture model, QQplot
 #' @examples
-#'library(MASS)
-#'library(PerformanceAnalytics)
-#'data(managers)
-#'x = checkData(managers[,2, drop = FALSE], na.rm = TRUE, method = "vector")
-#' # Panel 1: Mixture Normal distribution
+#' 
+#' library(MASS) 
+#' library(PerformanceAnalytics)
+#' data(managers)
+#' x = checkData(managers[,2, drop = FALSE], na.rm = TRUE, method = "vector")
+#' 
+#' # Panel 2: Normal distribution
+#' chart.QQPlot2(x, main = "Normal Distribution",
+#' 		line=c("quartiles"), distribution = 'norm',  
+#' 		envelope=0.95)
+#' 
+#' 
+#' 
+#' # Panel 2: Mixture Normal distribution
 #' obj = norMixEM(x,m=2)
 #' chart.QQPlot2(x, main = "Normal Mixture Distribution",
-#'    line=c("quartiles"), distribution = 'norMix',  distributionParameter='obj',
-#'		envelope=0.95)
+#' 		line=c("quartiles"), distribution = 'norMix',  distributionParameter='obj',
+#' 		envelope=0.95)
 #' 
-#' #end examples
 #' 
-#' # Panel 2: 
 #' retLW = largecapW['2006-01-31/',12:20]
 #' ret = retLW[,"MO"]
 #' ret = as.numeric(coredata(ret))
 #' n = length(ret)
 #' 
-#' ## Symmetric t qqplot
+#' 
+#' # Panel 3: Symmetric t distribution
 #' fit.tSN = st.mple(as.matrix(rep(1,n)),ret,symmetr = TRUE)
 #' names(fit.tSN$dp) = c("location","scale","dof")
 #' round(fit.tSN$dp,3)
-#' 
 #' chart.QQPlot2(ret, main = "MO Symmetric t-Distribution QQPlot",
 #' 		xlab = "quantilesSymmetricTdistEst",line = c("quartiles"),
 #' 		envelope = .95, distribution = 't', distributionParameter='df=fit.tSN$dp[3]',pch = 20)
 #' 
+#' 
+#' # Panel 4: Skewed t distribution
 #' fit.st = st.mple(as.matrix(rep(1,n)),ret)
 #' # fit.st = st.mple(y=ret)  Produces same result as line above
 #' names(fit.st$dp) = c("location","scale","skew","dof")
@@ -95,10 +104,8 @@
 #' chart.QQPlot2(ret, main = "MO Returns Skewed t-Distribution QQPlot",
 #' 		xlab = "quantilesSkewedTdistEst",line = c("quartiles"),
 #' 		envelope = .95, distribution = 'st',distributionParameter = 'xi = fit.st$dp[1],
-#' 		omega = fit.st$dp[2],alpha = fit.st$dp[3],
-#' 		nu=fit.st$dp[4]',pch = 20)
-#' 
-#' 
+#' 				omega = fit.st$dp[2],alpha = fit.st$dp[3],
+#' 				nu=fit.st$dp[4]',pch = 20)
 #' 
 #' 
 #' @export 
