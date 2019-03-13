@@ -67,7 +67,7 @@
 #' data(managers)
 #' x = checkData(managers[,2, drop = FALSE], na.rm = TRUE, method = "vector")
 #' 
-#' # Panel 2: Normal distribution
+#' # Panel 1: Normal distribution
 #' chart.QQPlot2(x, main = "Normal Distribution",
 #' 		line=c("quartiles"), distribution = 'norm',  
 #' 		envelope=0.95)
