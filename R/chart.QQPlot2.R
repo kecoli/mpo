@@ -116,7 +116,7 @@ function (R, distribution = "norm", ylab = NULL, xlab = paste(distribution,
 		labels = FALSE, col = c(1, 4), lwd = 2, pch = 1, cex = 1, 
 		line = c("quartiles", "robust", "none"), element.color = "darkgray", 
 		cex.axis = 0.8, cex.legend = 0.8, cex.lab = 1, cex.main = 1, 
-		xaxis = TRUE, yaxis = TRUE, ylim = NULL, distributionParameter=list(),...) 
+		xaxis = TRUE, yaxis = TRUE, ylim = NULL, distributionParameter=NULL,...) 
 {
 	x = checkData(R, method = "vector", na.rm = TRUE)
 	if (is.null(main)) {
@@ -132,74 +132,12 @@ function (R, distribution = "norm", ylab = NULL, xlab = paste(distribution,
 	ord <- order(x[good])
 	ord.x <- x[good][ord]
 	
-#	if(distribution=="mixnormal")
-#	{
-#		qmixnormal <- function(q, ...){
-#			# norMix distribution
-#			para=distributionParameter
-#			
-#			if(!is.list(para))stop(" 'para' must be a 'list' object")
-#			
-#			if(is.null(para$m)|is.na(para$m)) 
-#				stop("The number of component must be specified in 'para$m'")
-#			
-#			require(nor1mix)
-#			out = norMixEM(x, para$m, trace=0)
-#			
-#			if (length(q)!=2){
-#				# only print once
-#				print("fitted model:")
-#				print(out[1:para$m,],digits=3)
-#			}
-#			if(is.null(para$mu) | is.null(para$sig2)) 
-#			# using fitted distribution
-#			{
-#				if (length(q)!=2)
-#					print("using fitted model as theoretical distribution")
-#				obj <- out
-#			}	else{
-#				# using specified distribution
-#				if(length(para$mu)!=para$m | length(para$sig2)!=para$m)
-#					stop("the number of components mismatch with parameter inputs")
-#				
-#				obj <- norMix(mu = para$mu, sig2 = para$sig2, w = para$w) 
-#			}
-#			qnorMix(q,obj)
-#		}
-#		
-#		dmixnormal<- function(p, ...){
-#			# norMix distribution
-#			para=distributionParameter
-#			if(!is.list(para))stop(" 'para' must be a 'list' object")
-#			if(is.null(para$m)|is.na(para$m)) 
-#				stop("The number of component must be specified in 'para$m'")
-#			
-#			require(nor1mix)
-#			
-#			out = norMixEM(x, para$m, trace=0)
-#			
-#			if(is.null(para$mu) | is.null(para$sig2)) 
-#			# using fitted distribution
-#			{
-#				obj <- out
-#			}	else{
-#				# using specified distribution
-#				if(length(para$mu) != para$m | length(para$sig2) != para$m)
-#					stop("the number of components mismatch with parameter inputs")
-#				
-#				obj <- norMix(mu = para$mu, sig2 = para$sig2, w = para$w) 
-#			}
-#			dnorMix(p,obj)
-#		}
-#		
-#	}  
 	q.function <- eval(parse(text = paste("q", distribution, 
 							sep = "")))
 	d.function <- eval(parse(text = paste("d", distribution, 
 							sep = "")))
 	n <- length(ord.x)
 	P <- ppoints(n)
-	
 	
 	eval(parse(text=paste("	z <- q.function(P,", distributionParameter,",...)")))
   
