@@ -6,15 +6,12 @@
 \usage{
 combine.cset(clist = c("sum", "lo", "box", "groups", "mu.target",
   "turnover.hobbs", "turnover", "propcost"), returns = returns,
-  list.arg = list(sum = NULL, mu.target = NULL, w.initial = NULL, toc = NULL,
-  upper = NULL, lower = NULL, group = NULL, upper.group = NULL, lower.group =
-  NULL, ptc = NULL), verbose = T)
+  list.arg = list(sum = NULL, mu.target = NULL, w.initial = NULL, toc =
+  NULL, upper = NULL, lower = NULL, group = NULL, upper.group = NULL,
+  lower.group = NULL, ptc = NULL), verbose = T)
 }
 \description{
 Constraint specifications
-}
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
 }
 \seealso{
 Other constraints: \code{\link{cset.box}},
@@ -27,5 +24,8 @@ Other constraints: \code{\link{cset.box}},
   \code{\link{turnover.hobbs.modify}},
   \code{\link{turnover.modify}}
 }
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
+}
+\concept{constraints}
 \keyword{constraint}
-

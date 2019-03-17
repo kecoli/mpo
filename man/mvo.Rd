@@ -9,11 +9,10 @@ mvo(returns, mu0, cset = NULL, wts.only = T, digits = NULL)
 \description{
 MVO Portfolio with Constraints
 }
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
-}
 \seealso{
 \code{\link{}}
 }
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
+}
 \keyword{constraint}
-

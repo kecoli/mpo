@@ -9,9 +9,6 @@ cset.mu.target(returns, mu.target)
 \description{
 Constraint specifications
 }
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
-}
 \seealso{
 Other constraints: \code{\link{combine.cset}},
   \code{\link{cset.box}}, \code{\link{cset.fixed}},
@@ -23,5 +20,8 @@ Other constraints: \code{\link{combine.cset}},
   \code{\link{turnover.hobbs.modify}},
   \code{\link{turnover.modify}}
 }
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
+}
+\concept{constraints}
 \keyword{constraint}
-

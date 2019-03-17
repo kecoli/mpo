@@ -15,14 +15,13 @@ use \code{table.Performance.pool} to check available metrics. recoded SharpeRati
 \examples{
 table.Performance.pool.cran()
 }
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
-}
 \seealso{
 \code{\link{table.Performance}}, \code{\link{table.Performance.pool}}
+}
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
 }
 \keyword{measure}
 \keyword{metrics}
 \keyword{performance}
 \keyword{table}
-

@@ -31,4 +31,3 @@ Doug Martin, Kirk Li  \email{kirkli@stat.washington.edu}
 }
 \keyword{constraints}
 \keyword{turnover,}
-

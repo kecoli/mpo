@@ -9,12 +9,11 @@ efrontMV(returns, cset = NULL, list.arg = NULL, npoints = 10)
 \description{
 Compute Efficient Frontier of Mean Variance Optimization
 }
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
-}
 \seealso{
 \code{\link{efrontPlot}}
 }
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
+}
 \keyword{efficient}
 \keyword{frontier}
-

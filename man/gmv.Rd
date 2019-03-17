@@ -18,4 +18,3 @@ GMV Portfolio with Constraints
 Kirk Li  \email{kirkli@stat.washington.edu}
 }
 \keyword{constraint}
-

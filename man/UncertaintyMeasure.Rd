@@ -21,13 +21,12 @@ This function returns the standard error of the three estimator of Variance.
 data(edhec)
 var.se(edhec[,1],methods="normal")
 }
-\author{
-Douglass Martin, Kirk Li
-}
 \references{
 TBA
+}
+\author{
+Douglass Martin, Kirk Li
 }
 \keyword{bootstrap}
 \keyword{estimation,}
 \keyword{variance}
-

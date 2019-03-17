@@ -9,11 +9,10 @@ minmu(returns, cset = NULL)
 \description{
 Compute the minimu of mean return using GMV
 }
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
-}
 \seealso{
 \code{\link{}}
 }
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
+}
 \keyword{constraint}
-

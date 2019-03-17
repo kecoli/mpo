@@ -7,7 +7,8 @@
 VaR or ES, accompanied with bootstrap of standard error.}
 \usage{
 sharpeRatio(R, Rf = 0, p = 0.95, method = c("StdDev", "VaR", "ES"),
-  weights = NULL, annualize = FALSE, bootsd = FALSE, ...)
+  weights = NULL, annualize = FALSE, bootsd = FALSE,
+  geometric = FALSE, ...)
 }
 \arguments{
 \item{R}{an xts, vector, matrix, data frame, timeSeries or zoo object of
@@ -22,9 +23,9 @@ asset returns}
 
 \item{annualize}{if TRUE, annualize the measure, default FALSE}
 
-\item{methods}{one of "StdDev" or "VaR" or "ES" to use as the denominator}
-
 \item{\dots}{any other passthru parameters to the VaR or ES functions}
+
+\item{methods}{one of "StdDev" or "VaR" or "ES" to use as the denominator}
 }
 \description{
 A modified version of sharpeRatio that compatible with table.Peroformance
@@ -83,9 +84,6 @@ sharpeRatio(edhec,Rf = .04/12)
 # sharpeRatio(edhec[, 6, drop = FALSE], Rf = .04/12, method="VaR", bootsd=TRUE)
 
 }
-\author{
-Brian G. Peterson, Kirk Li
-}
 \references{
 Sharpe, W.F. The Sharpe Ratio,\emph{Journal of Portfolio
 Management},Fall 1994, 49-58.
@@ -100,8 +98,10 @@ v 5.
 \code{\link{ActivePremium}} \cr \code{\link{SortinoRatio}} \cr
 \code{\link{VaR}} \cr \code{\link{ES}} \cr
 }
+\author{
+Brian G. Peterson, Kirk Li
+}
 \keyword{distribution}
 \keyword{models}
 \keyword{multivariate}
 \keyword{ts}
-

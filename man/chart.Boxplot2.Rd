@@ -9,7 +9,8 @@ chart.Boxplot2(R, horizontal = TRUE, names = TRUE, as.Tufte = FALSE,
   sort.ascending = FALSE, colorset = "black", symbol.color = "red",
   mean.symbol = 1, median.symbol = "|", outlier.symbol = 1,
   show.data = NULL, add.mean = TRUE, xlab = "Return",
-  main = "Return Distribution Comparison", element.color = "darkgray", ...)
+  main = "Return Distribution Comparison", element.color = "darkgray",
+  ...)
 }
 \arguments{
 \item{R}{an xts, vector, matrix, data frame, timeSeries or zoo object of
@@ -100,11 +101,6 @@ chart.Boxplot2(R=edhec ,sort.by="mean", horizontal=FALSE
 , sort.base="variance", sort.ascending=FALSE)
 
 }
-\author{
-Peter Carl
-
-Ke Li \email{kirkli@stat.washington.edu}
-}
 \references{
 Tufte, Edward R.  \emph{The Visual Display of Quantitative
 Information}. Graphics Press. 1983. p. 124-129
@@ -112,9 +108,13 @@ Information}. Graphics Press. 1983. p. 124-129
 \seealso{
 \code{\link[graphics]{boxplot}}
 }
+\author{
+Peter Carl
+
+Ke Li \email{kirkli@stat.washington.edu}
+}
 \keyword{distribution}
 \keyword{hplot}
 \keyword{models}
 \keyword{multivariate}
 \keyword{ts}
-

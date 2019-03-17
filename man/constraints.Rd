@@ -9,11 +9,10 @@ constraints(A, b, meq)
 \description{
 Wrapper of constraints to constraint object
 }
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
-}
 \seealso{
 \code{\link{}}
 }
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
+}
 \keyword{constraint}
-

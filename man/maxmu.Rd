@@ -11,11 +11,10 @@ maxmu(returns, cset, mu.only = TRUE, digits = NULL, verbose = FALSE)
 Compute the Max Mean Return Portfolio with Constraints
 This is primarily to compute the maximum mean return with constraints
 }
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
-}
 \seealso{
 \code{\link{}}
 }
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
+}
 \keyword{constraint}
-

@@ -4,10 +4,11 @@
 \alias{table.Performance}
 \title{Generate general performance table for returns}
 \usage{
-table.Performance(R, metrics = NULL, metricsNames = NULL, verbose = FALSE,
-  interactive = TRUE, arg.list = NULL, digits = 4, latex = FALSE,
-  exportFun = NULL, exportXLS = FALSE,
-  ExcelFileName = "PerformanceReport.xls", flag.pre.arg.list = FALSE, ...)
+table.Performance(R, metrics = NULL, metricsNames = NULL,
+  verbose = FALSE, interactive = TRUE, arg.list = NULL, digits = 4,
+  latex = FALSE, exportFun = NULL, exportXLS = FALSE,
+  ExcelFileName = "PerformanceReport.xls", flag.pre.arg.list = FALSE,
+  ...)
 }
 \arguments{
 \item{R}{an xts, vector, matrix, data frame, timeSeries or zoo object of
@@ -59,7 +60,7 @@ res <- table.Performance(R=edhec,verbose=T, interactive=TRUE)
 # Example 2: start with Var and ES
 res.ex2 <- table.Performance(edhec,metrics=c("VaR", "ES"), 
 metricsNames=c("Modified VaR","Modified Expected 
-Shortfall"), interactive=F, verbose=T)
+Shortfall"),interactive=FALSE, verbose=T)
 
 # Example 3: Non-interactive
 arg.list <- list(
@@ -92,14 +93,13 @@ arg.list=arg.list, verbose=T, digits=4, latex=TRUE, exportXLS=TRUE,ExcelFileName
 }
 
 }
-\author{
-Kirk Li  \email{kirkli@stat.washington.edu}
-}
 \seealso{
 \code{\link{table.Performance.pool}},\code{\link{table.Performance.pool.cran}},\code{\link{table.Arbitrary}}
+}
+\author{
+Kirk Li  \email{kirkli@stat.washington.edu}
 }
 \keyword{measure}
 \keyword{metrics}
 \keyword{performance}
 \keyword{table}
-
