@@ -1,7 +1,5 @@
 #' Plot a QQ chart that adapts to different distribution types
-#' 
-#' Plot the return data against a best fitted normal mixture model, 
-#' as extended from \code{\link{chart.QQPlot}} 
+#' modified from \code{\link{chart.QQPlot}} 
 #' 
 #' A Quantile-Quantile (QQ) plot is a scatter plot designed to compare the data
 #' to the theoretical distributions to visually determine if the observations
@@ -48,7 +46,7 @@
 #' @param cex.main The magnification to be used for the main title relative to
 #' the current setting of 'cex'.
 #' @param \dots any other passthru parameters to the distribution function
-#' @author for QQplot with mixture normal distribution,  Kirk Li \email{kirkli@@stat.washington.edu}
+#' @author updated by Kirk Li \email{kirkli@@stat.washington.edu}
 #' @seealso 
 #' \code{\link[stats]{qqplot}} \cr 
 #' \code{\link[car]{qq.plot}} \cr
@@ -75,6 +73,7 @@
 #' 
 #' 
 #' # Panel 2: Mixture Normal distribution
+#' library(nor1mix)
 #' obj = norMixEM(x,m=2)
 #' chart.QQPlot2(x, main = "Normal Mixture Distribution",
 #' 		line=c("quartiles"), distribution = 'norMix',  distributionParameter='obj',

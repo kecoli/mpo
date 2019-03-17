@@ -2,7 +2,8 @@
 % Please edit documentation in R/chart.QQPlot2.R
 \name{chart.QQPlot2}
 \alias{chart.QQPlot2}
-\title{Plot a QQ chart that adapts to different distribution types}
+\title{Plot a QQ chart that adapts to different distribution types
+modified from \code{\link{chart.QQPlot}}}
 \usage{
 chart.QQPlot2(R, distribution = "norm", ylab = NULL,
   xlab = paste(distribution, "Quantiles"), main = NULL,
@@ -71,10 +72,6 @@ the current setting of 'cex'.}
 \item{\dots}{any other passthru parameters to the distribution function}
 }
 \description{
-Plot the return data against a best fitted normal mixture model, 
-as extended from \code{\link{chart.QQPlot}}
-}
-\details{
 A Quantile-Quantile (QQ) plot is a scatter plot designed to compare the data
 to the theoretical distributions to visually determine if the observations
 are likely to have come from a known population. The empirical quantiles are
@@ -100,6 +97,7 @@ chart.QQPlot2(x, main = "Normal Distribution",
 
 
 # Panel 2: Mixture Normal distribution
+library(nor1mix)
 obj = norMixEM(x,m=2)
 chart.QQPlot2(x, main = "Normal Mixture Distribution",
 		line=c("quartiles"), distribution = 'norMix',  distributionParameter='obj',
@@ -149,7 +147,7 @@ John (2007) \emph{car: Companion to Applied Regression} \cr
 CRAN package \code{\link[nor1mix]{norMixFit}} for mixture normal distribution
 }
 \author{
-for QQplot with mixture normal distribution,  Kirk Li \email{kirkli@stat.washington.edu}
+updated by Kirk Li \email{kirkli@stat.washington.edu}
 }
 \keyword{QQplot}
 \keyword{mixture}
